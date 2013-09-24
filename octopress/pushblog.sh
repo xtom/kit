@@ -1,13 +1,13 @@
 #!/bin/sh
 
-function exitException()
+exitException ()
 {
 	if [ $? -ne 0 ]; then
 		echo "Error: "$1 1>&2
 		exit 101
 	fi
 }
-function OK()
+OK ()
 {
 	echo "OK: "$1
 }
@@ -17,11 +17,15 @@ exitException "blog root-dir(octopress) not exist, make sure you've already clon
 
 
 comment=$1
-while [ "$comment" == "" ]; do
+while [ "$comment" = "" ]
+do
 	read -p "input Title: " comment
 done
 
-echo $comment
+if [ "$comment" = "" ]; then
+	echo "comment is null"
+	exit 101
+fi
 
 rake generate
 rake deploy
